@@ -3,11 +3,61 @@
     <head>
         <meta charset="utf-8">
         <title>D3 Page Template</title>
-        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <script type="text/javascript" src="d3/d3.js"></script>
     </head>
     <body>
         <script type="text/javascript">
-            // Your beautiful D3 code will go here
+// chaining methods
+            d3.select("body")
+              .append("p")
+              .text("New paragraph!");
+// chainless
+            var body = d3.select("body");
+            var p = body.append("p");
+            p.text("New chainless paragraph");
+// loading a csv file
+// args: "file", anonymous function callback when csv loaded
+// d3.csv() is asynchronous
+// only reference *within* the callback
+// callback occurs even if loading fails
+            var globalData;
+            d3.csv("food.csv", function(error, data) {
+                // if error is not null, something went wrong
+                if (error) {
+                  // data is now 'undefined'
+                  console.log(error);
+                } else {
+                  // file loaded successfully so error == null
+                  console.log(data)
+                }
+                // calling sequence for minimizing external references
+                globalData = data; // copy to global scope 
+                generateVis();     // generate visualization
+                hideLoadingMsg();  // another global func
+            });
+            function generateVis() {}
+            function hideLoadingMsg() {}
+
+            var dataset = [ 5, 10, 15, 20, 25 ];
+
+            d3.select("body")    // finds body in DOM
+              .selectAll("p")    // returns empty selection since none exist yet
+              .data(dataset)     // execute five times, once for each data row
+              .enter()           // creates new data bound elements
+              .append("p")       // takes empty placeholder and append "p" into DOM
+              .text(function (d) { return d; }) // anytime after data() call, 
+                                                // you can create an anonymous 
+                                                // function accepting d as input
+              .style("color", function (d) {
+                        if (d % 2 == 0) {
+                        return "red";
+                        } else {
+                        return "blue"
+                    }
+                });
+// now in the console view the __data__
+// console.log(d3.selectAll("p"))
+// binding data to element exists in memory as a __data__ attribute of that element
         </script>
     </body>
 </html>
