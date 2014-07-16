@@ -18,6 +18,7 @@
 * .classed() quickly applies or removes classes from elements
 * D3 .classed( "bar", true ), applies class bar
 * D3 .classed( "bar", false ), removes class bar
+* D3 .data() loops through all dataset elements
 -->
 <html lang="en">
     <head>
@@ -36,7 +37,13 @@
     </head>
     <body>
         <script type="text/javascript">
-            var dataset = [ 5, 10, 15, 20, 25 ];
+            var dataset = [];
+            for ( var i = 0; i < 25; i++ ) {
+                var newNum = Math.random() * 30; // [0, 30)
+                newNum = Math.round( newNum );
+                dataset.push( newNum );
+            }
+// console.log( dataset ) to view the data
 
             d3.select("body")
               .selectAll("div")
