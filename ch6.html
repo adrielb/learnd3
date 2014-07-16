@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- 
+* Drawing divs
+* div draws a rectangle
+* shouldn't use an empty div for visual effects
+* width and heights of divs set with CSS styles
+* each div is assigned the 'bar' class
+* D3 selection.attr() and style().attr()
+* sets DOM attributes vs applying CSS styles
+* attr() sets HTML attributes
+* HTML attributes are property/value pairs in <> tags
+* <img src="image.png" width="100px" alt="logo" \>
+* attributes: src, width, alt
+* <p class="caption">
+* .attr("class", "bar")
+* use classes for properties shared across multiple elements
+* apply style rules only when deviating from that
+* .classed() quickly applies or removes classes from elements
+* D3 .classed( "bar", true ), applies class bar
+* D3 .classed( "bar", false ), removes class bar
+-->
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Page Template</title>
+        <script type="text/javascript" src="d3/d3.js"></script>
+        <style type="text/css">
+            div.bar {
+                display: inline-block;
+                width: 20px;
+                height: 75px;
+                background-color: teal;
+                margin-right: 2px;
+            } 
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var dataset = [ 5, 10, 15, 20, 25 ];
+
+            d3.select("body")
+              .selectAll("div")
+              .data(dataset)
+              .enter()
+              .append("div")
+              .attr("class", "bar")
+              .style("height", 
+                function(d){
+                    var barHeight = d * 5;
+                    return barHeight + "px";
+                });
+
+        </script>
+        <div class="bar" style="height: 120px;"></div>
+    </body>
+</html>
